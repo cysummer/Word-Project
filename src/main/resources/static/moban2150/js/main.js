@@ -1,0 +1,19 @@
+$(function(){
+	$(".add_tag").click(function(){
+		$(".mask").fadeIn();
+		$(".add_panel").fadeIn();
+	});
+	$(".close1").click(function(){
+		$(".mask").fadeOut();
+		$(".add_panel").fadeOut();
+	});
+
+	$(".modify_tag").click(function(){
+		$(".mask").fadeIn();
+		$(".modify_panel").fadeIn();
+	});
+	$(".close2").click(function(){
+		$(".mask").fadeOut();
+		$(".modify_panel").fadeOut();
+	});
+})

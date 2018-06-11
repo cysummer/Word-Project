@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UsersMapper">
+
+  <resultMap id="BaseResultMap" type="model.Users">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="read_num" jdbcType="INTEGER" property="readNum" />
+    <result column="down_num" jdbcType="INTEGER" property="downNum" />
+    <result column="upload_num" jdbcType="INTEGER" property="uploadNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+
+  <sql id="Base_Column_List">
+    id, username, email, phone, gender, read_num, down_num, upload_num, create_time, 
+    password, status, note
+  </sql>
+  <select id="selectByExample" parameterType="model.UsersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="model.Users">
+    insert into t_user (id, username, email, 
+      phone, gender, read_num, 
+      down_num, upload_num, create_time, 
+      password, status, note
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{readNum,jdbcType=INTEGER}, 
+      #{downNum,jdbcType=INTEGER}, #{uploadNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="model.Users">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="readNum != null">
+        read_num,
+      </if>
+      <if test="downNum != null">
+        down_num,
+      </if>
+      <if test="uploadNum != null">
+        upload_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null">
+        #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="downNum != null">
+        #{downNum,jdbcType=INTEGER},
+      </if>
+      <if test="uploadNum != null">
+        #{uploadNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="model.Users">
+    update t_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="readNum != null">
+        read_num = #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="downNum != null">
+        down_num = #{downNum,jdbcType=INTEGER},
+      </if>
+      <if test="uploadNum != null">
+        upload_num = #{uploadNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="model.Users">
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      read_num = #{readNum,jdbcType=INTEGER},
+      down_num = #{downNum,jdbcType=INTEGER},
+      upload_num = #{uploadNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      password = #{password,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 分页查询 -->
+  <select id="selectByList" resultMap="BaseResultMap" parameterType="domain.request.UserQueryParam">
+      <include refid="pagnationBegin" />
+      SELECT <include refid="Base_Column_List" />
+      FROM t_user
+      <where>
+          <if test="startTime != null">
+              AND create_time >= #{startTime}
+          </if>
+
+          <if test="endTime != null">
+              AND create_time &lt;= #{endTime}
+          </if>
+
+          <if test="username != null">
+              <![CDATA[
+                AND username LIKE CONCAT('%', #{username}, '%')
+               ]]>
+          </if>
+      </where>
+    ORDER BY id
+    <include refid="pagnationEnd" />
+  </select>
+
+
+    <!--分页查询开始和结束标志-->
+    <sql id="pagnationBegin">
+    </sql>
+
+  <sql id="pagnationEnd">
+     <![CDATA[LIMIT #{offset}, #{limit}]]>
+  </sql>
+
+  <!-- 统计条数 -->
+  <select id="countByPage" parameterType="domain.request.UserQueryParam" resultType="int">
+    SELECT count(id)
+    FROM t_user
+    <where>
+      <if test="startTime != null">
+        AND create_time >= #{startTime}
+      </if>
+
+      <if test="endTime != null">
+        AND create_time &lt;= #{endTime}
+      </if>
+
+      <if test="username != null">
+        <![CDATA[
+                AND username LIKE CONCAT('%', #{username}, '%')
+        ]]>
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+    <h1>文件上传</h1>
+    <form  id="Form" enctype="multipart/form-data">
+        <p>选择文件1: <input type="file" name="fileName"id="fileUpload" /></p>
+        <button class=" btn btn-info" onclick="upload()">提交</button>
+    </form>
+<script>
+    function upload() {
+        var formData = new FormData($( "#Form" )[0]);
+        $.ajax({
+            url: 'http://localhost:8080/fileUpload' ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                alert("上传成功");
+            },
+            error: function (returndata) {
+                alert("上传失败");
+            }
+        });
+    }
+</script>
+</body>
+</html>

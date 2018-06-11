@@ -1,0 +1,32 @@
+# SPRING PROFILES
+spring:
+    # HTTP ENCODING
+    http:
+        encoding.charset: UTF-8
+        encoding.enable: true
+        encoding.force: true
+    #mvc:
+        #view.prefix: /WEB-INF/jsp/
+        #view.suffix: .jsp
+    # DATASOURCE
+    datasource:
+        driverClass: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: 123456
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+
+myProps:
+  filePath: F:/word_project/
+  secretKryPath: C:/Users/asus/Desktop/毕设/系统/后端/design/src/main/resources/secretKey.txt
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+
+# Single file max size
+multipart.maxFileSize: 100Mb
+# All files max size
+multipart.maxRequestSize: 1000Mb

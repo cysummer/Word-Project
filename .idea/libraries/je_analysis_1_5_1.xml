@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="je-analysis-1.5.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/je-analysis-1.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/word-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

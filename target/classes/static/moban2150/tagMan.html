@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<head>
+    <title>标签管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <!-- bootstrap-css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- //bootstrap-css -->
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <!-- font CSS -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- //font-awesome icons -->
+    <script src="js/jquery2.0.3.min.js"></script>
+    <script src="js/main.js"></script>
+    <style>
+        a {
+            cursor:pointer;
+        }
+    </style>
+</head>
+
+<body ng-app="labeltag" ng-controller="labeltagController">
+
+<section id="container">
+    <!--header start-->
+    <header class="header fixed-top clearfix">
+        <!--logo start-->
+        <div class="brand">
+            <a href="index.html" class="logo">
+                word<span style="font-size: 20px;color: #fff;">&nbsp;管理系统</span>
+            </a>
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars"></div>
+            </div>
+        </div>
+        <!--logo end-->
+        <div class="top-nav clearfix">
+            <!--search & user info start-->
+            <ul class="nav pull-right top-menu">
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <img alt="" src="images/1.png">
+                        <span class="username">chenyuan</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <li><a  ng-click = "logout()"  ><i class="fa fa-key"></i> Log Out</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!--search & user info end-->
+        </div>
+    </header>
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse">
+            <!-- sidebar menu start-->
+            <div class="leftside-navigation">
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li>
+                        <a href="index.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>主页</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a>
+                            <i class="fa fa-book"></i>
+                            <span>文档管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="fileMan.html">文档管理</a></li>
+                        </ul>
+                        <ul class="sub">
+                            <li><a href="fileUpload.html">上传文档</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="userMan.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>用户管理</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a>
+                            <i class="fa fa-book"></i>
+                            <span>数据管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="statics.html">数据统计</a></li>
+                        </ul>
+                        <ul class="sub">
+                            <li><a href="logRec.html">日志</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="tagMan.html"  class="active">
+                            <i class="fa fa-dashboard"></i>
+                            <span>标签管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="userInfo.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>个人信息</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
+
+    <!-- 模态框（Modal） 添加一级标签 -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        添加一级标签
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 70px;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="labelName1">
+                        </div>
+                    </div>
+                    <span style="color: red" id="errorInfo1"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="addlevel(1)">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal）添加二级标签 -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        添加二级标签
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 130px;">
+                    <div class="form-group">
+                        <label class="col-sm-2">一级标签</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" >
+                                <option ng-repeat="label in labels" value="{{label.id}}" id="labeLevel">{{label.lableName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="labelName2">
+                        </div>
+                    </div>
+                    <hr></br>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" style="color: red" id="errorInfo2"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="addlevel(2)">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal） 修改一级标签 -->
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        修改一级标签
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 70px;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="labelName3">
+                        </div>
+                    </div>
+                    <span style="color: red" id="errorInfo3"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="update(labelId, 1)">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal）修改二级标签 -->
+    <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        修改二级标签
+                    </h4>
+                </div>
+                <div class="modal-body" style="height: 130px;">
+                    <div class="form-group">
+                        <label class="col-sm-2">一级标签</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="selectValue">
+                                <option ng-repeat="label in labels" value="{{label.id}}" >{{label.lableName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">标签</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="labelName4">
+                        </div>
+                    </div>
+                    <hr></br>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label" style="color: red" id="errorInfo4"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary"  ng-click="update(labelId, 2)">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="table-agile-info">
+                <div style="height: 70px;">
+                    <button class="btn btn-info" data-toggle="modal" data-target="#myModal1" >添加一级标签</button>&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-info" data-toggle="modal" data-target="#myModal2" >添加二级标签</button>
+                </div>
+                <div class="panel panel-default">
+                    <div>
+                        <table  class="table table-striped b-t b-light" style="margin: 0">
+                            <thead>
+                            <tr>
+                                <th data-breakpoints="xs">编号</th>
+                                <th>标签名</th>
+                                <th>等级</th>
+                                <th data-breakpoints="xs">创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-expanded="true" ng-repeat="label in list">
+                                <td>{{label.id}}</td>
+                                <td>{{label.lableName}}</td>
+                                <td ng-if="label.level == 1">一级标签</td>
+                                <td ng-if="label.level == 2">二级标签</td>
+                                <td>{{label.createTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                                <td>
+                                    <button ng-if="label.level == 1" class="btn btn-default" data-toggle="modal" data-target="#myModal3" ng-click="show(label)" >修改</button>
+                                    <button ng-if="label.level == 2" class="btn btn-default" data-toggle="modal" data-target="#myModal4" ng-click="show(label)">修改</button>
+                                    <button  class="btn btn-default" ng-click="delete(label.id)">删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="floor" style="margin-left:75%;">
+                            <ul class="pagination" id="index">
+                                <li><a ng-click="submit(1)">&laquo;</a></li>
+                                <li class="page-pre"><a  ng-click="submit(prePage)">&lt;</a></li>
+                                <li><a id="one" ng-click="showinfo(1)"></a></li>
+                                <li><a id="two" ng-click="showinfo(2)"></a></li>
+                                <li><a id="three" ng-click="showinfo(3)"></a></li>
+                                <li><a id="four" ng-click="showinfo(4)"></a></li>
+                                <li><a id="five" ng-click="showinfo(5)"></a></li>
+                                <li class="page-pre"><a ng-click="submit(nextPage)">&gt;</a></li>
+                                <li><a ng-click="submit(totalPage)">&raquo;</a></li>
+                            </ul>
+                            <div style="margin-bottom: 20px;">
+                                <span ng-bind="pageNo"></span>
+                                /
+                                <span ng-bind="totalPage"></span>
+                                &nbsp;总共<span ng-bind="totalPage"></span>页
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </section>
+        <!-- footer -->
+        <div class="footer">
+        <div class="wthree-copyright">
+            <p>Copyright &copy; 2018.Company name chenyuan.<a> &nbsp;&nbsp;&nbsp;&nbsp;2018毕业设计系统</a></p>
+        </div>
+    </div>
+        <!-- / footer -->
+    </section>
+    <!--main content end-->
+</section>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/jquery.slimscroll.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]>
+<script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="js/jquery.scrollTo.js"></script>
+<script src="js/angular.min.js"></script>
+<script>
+    var labeltagController = angular.module('labeltag', []);
+
+    labeltagController.controller('labeltagController', function ($scope, $http) {
+        $scope.totalSize = 0;
+        $scope.pageNo = 1;
+        $scope.pageSize = 10;
+        $scope.totalPage = 0;
+        $scope.prePage = 1;
+        $scope.nextPage = 1;
+        $scope.level = 0;
+
+        $scope.init = function (pageNo, totalSize) {
+            $scope.totalSize = totalSize;
+            $scope.pageNo = pageNo;
+            $scope.pageSize = 10;
+            $scope.totalPage = Math.ceil($scope.totalSize / $scope.pageSize);
+            $scope.prePage = $scope.pageNo - 1 > 0 ? $scope.pageNo - 1 : 1;
+            $scope.nextPage = $scope.pageNo + 1 < $scope.totalSize ? $scope.pageNo + 1 : $scope.totalSize;
+        }
+
+        $scope.getLevel = function () {
+            $http({
+                url: "http://localhost:8080/label/level/list",
+                method: "get",
+                contentType: "application/json"
+            }).success(function (data) {
+                console.log(data);
+                if (data.model != null) {
+                     $scope.labels = data.model;
+                 } else {
+                     $scope.labels = null;
+                 }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        $scope.getLevel();
+
+        $http({
+            url: "http://localhost:8080/label/list",
+            method: "post",
+            contentType: "application/json",
+            data: {
+                pageNum: 1,
+                pageSize: 10
+            }
+        }).success(function (data) {
+            console.log(data);
+            $scope.list = data.model.resultList;
+            $scope.totalSize = data.model.totalSize;
+            $scope.init(1, $scope.totalSize);
+            shownum(1, $scope.totalPage);
+        }).error(function (data, status, headers, config) {
+
+        });
+
+        /**
+         * 显示
+         */
+        $scope.submit = function (pageNo) {
+            $scope.pageNo = pageNo;
+            $http({
+                url: "http://localhost:8080/label/list",
+                method: "post",
+                contentType: "application/json",
+                data: {
+                    pageNum: pageNo,
+                    pageSize: $scope.pageSize
+                }
+            }).success(function (data) {
+                console.log(data);
+                if (data.model != null) {
+                    $scope.list = data.model.resultList;
+                    $scope.totalSize = data.model.totalSize;
+                    $scope.init($scope.pageNo, $scope.totalSize);
+                    shownum($scope.pageNo, $scope.totalPage);
+                } else {
+                    $scope.list = null;
+                    $scope.totalSize = 0;
+                    $scope.init(1, $scope.totalSize);
+                    shownum(1, $scope.totalPage);
+                }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        /**
+         * 添加
+         */
+        $scope.addlevel = function (level) {
+            $scope.level = level;
+            var labelName;
+            var parentId;
+            if(level == 1){
+                labelName = $scope.labelName1;
+                parentId = 0;
+            }
+            else{
+                labelName = $scope.labelName2;
+                parentId = document.getElementById("labeLevel").value;
+            }
+            $http({
+                url: "http://localhost:8080/label/level/add",
+                method: "post",
+                contentType: "application/json",
+                data: {
+                    labelName: labelName,
+                    level: level,
+                    parentId: parentId
+                }
+            }).success(function (data) {
+                if(data.success){
+                    window.location.reload();
+                }else{
+                    if($scope.level == 1)
+                        document.getElementById("errorInfo1").innerText = data.msg;
+                    else
+                        document.getElementById("errorInfo2").innerText = data.msg;
+                }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        /**
+         * 删除
+         */
+        $scope.delete = function (id) {
+            $http({
+                url: "http://localhost:8080/label/delete/" + id ,
+                method: "get",
+                contentType: "application/json"
+            }).success(function (data) {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert("删除失败");
+                }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        $scope.show = function (label){
+            if(label.level == 1){
+                $scope.labelName3 = label.lableName;
+            }else{
+                $scope.labelName4 = label.lableName;
+            }
+            $scope.labelId = label.id;
+        }
+
+        /**
+         * 修改
+         */
+        $scope.update = function (labelId, level) {
+            $scope.level = level;
+            if(level == 1){
+                labelName = $scope.labelName3;
+                parentId = 0;
+            }
+            else{
+                labelName = $scope.labelName4;
+                parentId = $scope.selectValue;
+            }
+            console.log(labelId, labelName, level, parentId);
+            $http({
+                url: "http://localhost:8080/label/level/update",
+                method: "post",
+                contentType: "application/json",
+                data: {
+                    labelId:labelId,
+                    labelName: labelName,
+                    level: level,
+                    parentId: parentId
+                }
+            }).success(function (data) {
+                console.log(data);
+                if(data.success){
+                    window.location.reload();
+                }else{
+                    if($scope.level == 1)
+                        document.getElementById("errorInfo3").innerText = data.msg;
+                    else
+                        document.getElementById("errorInfo4").innerText = data.msg;
+                }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        $scope.logout = function () {
+            $http({
+                url: "http://localhost:8080/logout",
+                method: "get",
+                contentType: "application/json"
+            }).success(function (data) {
+                window.location.href="/moban2150/login.html";
+            }).error(function (data, status, headers, config) {
+            });
+        }
+
+        //动态显示页码 totalPage
+        function shownum(pageNo,totalPage){
+            var elem=document.getElementById("index");
+            if(totalPage<=5){//4 1
+                for(var i=0;i<5;i++)
+                {
+                    if(i<totalPage){
+                        elem.children[i+2].style.display="inline";
+                        elem.children[i+2].getElementsByTagName("a")[0].innerHTML=i+1;
+                    }else{
+                        elem.children[i+2].style.display="none";
+                    }
+                }
+            }else if(totalPage-pageNo<4){
+                var j=0;
+                for(var i=totalPage-4;i<totalPage;i++)
+                {
+                    elem.children[2+j].getElementsByTagName("a")[0].innerHTML=i;
+                    j++;
+                }
+                elem.children[j+2].getElementsByTagName("a")[0].innerHTML=i;
+            }else{
+                for(var i=0;i<5;i++)
+                {
+                    if(pageNo+i<=totalPage){
+                        elem.children[i+2].style.display="inline";
+                        elem.children[i+2].getElementsByTagName("a")[0].innerHTML=pageNo+i;
+                    }else{
+                        elem.children[i+2].style.display="none";
+                    }
+                }
+            }
+        }
+
+        //选择页码时显示相应页面内容
+        $scope.showinfo=function(num){
+            var elem=document.getElementById("index");
+            var x=elem.children[1+num].getElementsByTagName("a")[0].innerHTML;
+            $scope.submit(x);
+        };
+
+
+    });
+</script>
+</body>
+
+</html>

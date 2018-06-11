@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<head>
+<title>文档上传</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link rel="stylesheet" href="css/bootstrap.min.css" >
+<!-- //bootstrap-css -->
+<!--拖曳文件上传-->
+<link rel="stylesheet" type="text/css" href="css/zzsc.css">
+<link rel="stylesheet" href="css/ssi-uploader.css"/>
+<!-- Custom CSS -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href="css/style-responsive.css" rel="stylesheet"/>
+<!-- font CSS -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="css/font.css" type="text/css"/>
+<link href="css/font-awesome.css" rel="stylesheet"> 
+<link rel="stylesheet" href="css/morris.css" type="text/css"/>
+<!-- calendar -->
+<link rel="stylesheet" href="css/monthly.css">
+<!-- //calendar -->
+<!-- //font-awesome icons -->
+<script src="js/jquery2.0.3.min.js"></script>
+<script src="js/raphael-min.js"></script>
+<script src="js/morris.js"></script>
+<script src="js/ssi-uploader.js"></script>
+</head>
+<body>
+<section id="container">
+<!--header start-->
+<header class="header fixed-top clearfix">
+<!--logo start-->
+<div class="brand">
+    <a href="index.html" class="logo">
+        word<span style="font-size: 20px;color: #fff;">&nbsp;管理系统</span>
+    </a>
+    <div class="sidebar-toggle-box">
+        <div class="fa fa-bars"></div>
+    </div>
+</div>
+<!--logo end-->
+
+<div class="top-nav clearfix">
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu">
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <img alt="" src="images/2.png">
+                <span class="username">John Doe</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+            </ul>
+        </li>
+        <!-- user login dropdown end -->
+       
+    </ul>
+    <!--search & user info end-->
+</div>
+</header>
+<body>
+<!--header end-->
+<!--sidebar start-->
+<aside>
+    <div id="sidebar" class="nav-collapse">
+        <!-- sidebar menu start-->
+        <div class="leftside-navigation">
+            <ul class="sidebar-menu" id="nav-accordion">
+                <li>
+                    <a class="active" href="index.html">
+                        <i class="fa fa-dashboard"></i>
+                        <span>主页</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>文档管理</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="upload.html">上传文档</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a>
+                        <i class="fa fa-dashboard"></i>
+                        <span>用户管理</span>
+                    </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>数据统计</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a>日志管理</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a>
+                        <i class="fa fa-dashboard"></i>
+                        <span>标签管理</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a>
+                        <i class="fa fa-dashboard"></i>
+                        <span>个人信息</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+<!--sidebar end-->
+<!--main content start-->
+<section id="main-content">
+	<section class="wrapper">
+        <div class="form-w3layouts">
+            <!-- page start-->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Dropzone
+                            <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                            <a href="javascript:;" class="fa fa-cog"></a>
+                            <a href="javascript:;" class="fa fa-times"></a>
+                         </span>
+                        </header>
+                        <div class="panel-body">
+
+
+                            <form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+                                <div id="drop">
+                                    Drop Here
+
+                                    <a>Browse</a>
+                                    <input type="file" name="upl" multiple="">
+                                </div>
+
+                                <ul>
+                                    <!-- The file uploads will be shown here -->
+                                </ul>
+                            </form>
+
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </div>
+
+	</section>
+<!--main content end-->
+</section>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/jquery.slimscroll.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<script src="js/jquery.scrollTo.js"></script>
+<!-- morris JavaScript -->
+
+</body>
+</html>

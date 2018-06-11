@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.LogsMapper">
+  <resultMap id="BaseResultMap" type="model.Logs">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="operater" jdbcType="VARCHAR" property="operater" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="document_id" jdbcType="INTEGER" property="documentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, operater, status, document_id, create_time
+  </sql>
+  <select id="selectByExample" parameterType="model.LogsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.Logs">
+    insert into t_log (id, operater, status, 
+      document_id, create_time)
+    values (#{id,jdbcType=INTEGER}, #{operater,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{documentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Logs">
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="operater != null">
+        operater,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="documentId != null">
+        document_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="operater != null">
+        #{operater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="documentId != null">
+        #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Logs">
+    update t_log
+    <set>
+      <if test="operater != null">
+        operater = #{operater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="documentId != null">
+        document_id = #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Logs">
+    update t_log
+    set operater = #{operater,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      document_id = #{documentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 分页查询 -->
+  <select id="selectByList" resultMap="BaseResultMap" parameterType="domain.request.LogQueryParam">
+    <include refid="pagnationBegin" />
+    SELECT <include refid="Base_Column_List" />
+    FROM t_log
+    <where>
+      <if test="startTime != null">
+        AND create_time >= #{startTime}
+      </if>
+
+      <if test="endTime != null">
+        AND create_time &lt;= #{endTime}
+      </if>
+
+      <if test="username != null">
+        <![CDATA[
+                AND operater LIKE CONCAT('%', #{username}, '%')
+               ]]>
+      </if>
+    </where>
+    ORDER BY create_time DESC
+    <include refid="pagnationEnd" />
+  </select>
+
+
+  <!--分页查询开始和结束标志-->
+  <sql id="pagnationBegin">
+  </sql>
+
+  <sql id="pagnationEnd">
+    <![CDATA[LIMIT #{offset}, #{limit}]]>
+  </sql>
+
+  <!-- 统计条数 -->
+  <select id="countByPage" parameterType="domain.request.LogQueryParam" resultType="int">
+    SELECT count(id)
+    FROM t_log
+    <where>
+      <if test="startTime != null">
+        AND create_time >= #{startTime}
+      </if>
+
+      <if test="endTime != null">
+        AND create_time &lt;= #{endTime}
+      </if>
+
+      <if test="username != null">
+        <![CDATA[
+                AND operater LIKE CONCAT('%', #{username}, '%')
+        ]]>
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

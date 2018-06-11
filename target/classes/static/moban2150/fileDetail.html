@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<head>
+    <title>文档详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- bootstrap-css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- //bootstrap-css -->
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css'/>
+    <link href="css/style-responsive.css" rel="stylesheet"/>
+    <!-- font CSS -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/morris.css" type="text/css"/>
+    <!-- calendar -->
+    <link rel="stylesheet" href="css/monthly.css">
+    <!-- //calendar -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- //font-awesome icons -->
+    <script src="js/jquery2.0.3.min.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/morris.js"></script>
+</head>
+
+<body ng-app="fileDetail" ng-controller="fileDetailController">
+<section id="container">
+    <!--header start-->
+    <header class="header fixed-top clearfix">
+        <!--logo start-->
+        <div class="brand">
+            <a href="index.html" class="logo">
+                word<span style="font-size: 20px;color: #fff;">&nbsp;管理系统</span>
+            </a>
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars"></div>
+            </div>
+        </div>
+        <!--logo end-->
+        <div class="top-nav clearfix">
+            <!--search & user info start-->
+            <ul class="nav pull-right top-menu">
+                <!-- user login dropdown start-->
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <img alt="" src="images/1.png">
+                        <span class="username">chenyuan</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <li><a ng-click = "logout()"><i class="fa fa-key"></i> Log Out</a></li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!--search & user info end-->
+        </div>
+    </header>
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse">
+            <!-- sidebar menu start-->
+            <div class="leftside-navigation">
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li>
+                        <a href="index.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>主页</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a class="active">
+                            <i class="fa fa-book"></i>
+                            <span>文档管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="fileMan.html">文档管理</a></li>
+                        </ul>
+                        <ul class="sub">
+                            <li><a href="fileUpload.html">上传文档</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="userMan.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>用户管理</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a>
+                            <i class="fa fa-book"></i>
+                            <span>数据管理</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="statics.html">数据统计</a></li>
+                        </ul>
+                        <ul class="sub">
+                            <li><a href="logRec.html">日志</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="tagMan.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>标签管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="userInfo.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>个人信息</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="form-w3layouts">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                文档详情
+                            </header>
+                            <div class="panel-body">
+                                <div class="position-center">
+                                    <form role="form">
+                                        <div class="block1">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="label2">上传者</label>
+                                                    {{documentDetail.username}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="label2">上传时间</label>
+                                                    {{documentDetail.createTime | date:"yyyy-MM-dd HH:mm:ss"}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="block1">
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="label2">文档标题</label>
+                                                    {{documentDetail.title}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="label2">审核状态</label>
+                                                    <span ng-if="documentDetail.status == 0">审核中</span>
+                                                    <span ng-if="documentDetail.status == 1">审核通过</span>
+                                                    <span ng-if="documentDetail.status == 2">审核未过</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="block1">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label class="label2">关键字</label>
+                                                    <span>{{documentDetail.keywords}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                                        <div class="block1">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <label class="label2">标签</label>
+                                                    {{documentDetail.labelName}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                                        <div class="block1">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="label2">浏览量</label>
+                                                    {{documentDetail.readNum}}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="label2">下载量</label>
+                                                    <span>{{documentDetail.downloadNum}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="block1">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <a href="readDoc.html?id={{documentDetail.url}}" target="_blank">查看文档</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                                       <!-- <textarea class="form-control" rows="12" style="resize:none;" readonly>-->
+
+                                            </textarea>
+                                        <div class="text-center" style="margin-top:30px;">
+                                            <button ng-if="documentDetail.status == 0" type="submit" class="btn btn-info" ng-click="verify(documentDetail.id, 1)">审核通过</button>
+                                            <button ng-if="documentDetail.status == 0" type="submit" class="btn btn-warning" ng-click="verify(documentDetail.id, 2)">审核失败</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- footer -->
+        <div class="footer">
+            <div class="wthree-copyright">
+                <p>Copyright &copy; 2018.Company name chenyuan.<a> &nbsp;&nbsp;&nbsp;&nbsp;2018毕业设计系统</a></p>
+            </div>
+        </div>
+        <!-- / footer -->
+    </section>
+    <!--main content end-->
+</section>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/jquery.slimscroll.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+<!--[if lte IE 8]>
+<script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+
+<script src="js/angular.min.js"></script>
+<script>
+    var fileDetailController = angular.module('fileDetail', []);
+
+    fileDetailController.controller('fileDetailController', function ($scope, $http) {
+
+        $scope.UrlSearch = function () {
+            var name, value;
+            var str = location.href; //取得整个地址栏
+            var num = str.indexOf("?")
+            str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+            var arr = str.split("&"); //各个参数放到数组里
+            console.log(arr);
+            num = arr[0].indexOf("=");
+            value = arr[0].substr(num + 1);
+            $scope.id = value;
+        }
+
+        $scope.UrlSearch();
+        $http({
+            url: "http://localhost:8080/document/detail/" + $scope.id,
+            method: "get",
+            contentType: "application/json"
+        }).success(function (data) {
+            $scope.documentDetail = data.model;
+        }).error(function (data, status, headers, config) {
+
+        });
+
+        $scope.verify = function (id, status) {
+            $http({
+                url: "http://localhost:8080/document/verify",
+                method: "post",
+                contentType: "application/json",
+                data: {
+                    documentId: id,
+                    status:status
+                }
+            }).success(function (data) {
+                if(data.success){
+                    alert("操作成功！");
+                    window.location.reload();
+                }else{
+                    alert("操作失败！");
+                }
+            }).error(function (data, status, headers, config) {
+
+            });
+        }
+
+        $scope.logout = function () {
+            $http({
+                url: "http://localhost:8080/logout",
+                method: "get",
+                contentType: "application/json"
+            }).success(function (data) {
+                window.location.href="/moban2150/login.html";
+            }).error(function (data, status, headers, config) {
+            });
+        }
+
+    });
+
+
+</script>
+
+</body>
+
+</html>
